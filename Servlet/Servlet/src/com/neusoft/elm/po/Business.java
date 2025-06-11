@@ -1,4 +1,4 @@
-package com.neusoft.elm.po
+package com.neusoft.elm.po;
 
 public class Business {
     private Integer businessId;

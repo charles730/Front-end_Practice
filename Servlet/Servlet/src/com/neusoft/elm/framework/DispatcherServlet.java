@@ -48,7 +48,7 @@ public class DispatcherServlet extends HttpServlet {
             System.out.println("DispatcherServlet信息：请求url：" + path);
             System.out.println("DispatcherServlet信息：类名：" + className + "\t方法名：" + methodName);
         } finally {
-            out.close();
+            if (out != null) out.close();
         }
     }
 

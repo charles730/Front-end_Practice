@@ -17,13 +17,13 @@ public class OrderDetailetDaoImpl implements OrderDetailetDao {
 
     @Override
     public int saveOrderDetailetBatch(List<OrderDetailet> list) throws Exception {
-        int result = 0;
-        //insert into xxx values(xxx,xxx,xx),(xxx,xxx,xxx),(xxx,xxx,xxx)
+        int result;
+        // insert into xxx values(xxx,xxx,xx),(xxx,xxx,xxx),(xxx,xxx,xxx)
         StringBuilder stringBuffer = new StringBuilder("insert into orderDetailet(orderId, foodId, quantity)values");
         for (OrderDetailet od : list) {
             stringBuffer.append(" (").append(od.getOrderId()).append(", ").append(od.getFoodId()).append(", ").append(od.getQuantity()).append("),");
         }
-        //去掉sql中最后一个逗号
+        // 去掉sql中最后一个逗号
         String sql = stringBuffer.substring(0, stringBuffer.toString().length() - 1);
         try {
             con = DBUtil.getConnection();
