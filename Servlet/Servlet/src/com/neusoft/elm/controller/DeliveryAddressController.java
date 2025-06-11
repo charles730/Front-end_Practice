@@ -38,8 +38,7 @@ public class DeliveryAddressController {
         deliveryAddress.setAddress(request.getParameter("address"));
         deliveryAddress.setDaId(Integer.valueOf(request.getParameter("daId")));
         DeliveryAddressService service = new DeliveryAddressServiceImpl();
-        int result = service.updateDeliveryAddress(deliveryAddress);
-        return result;
+        return service.updateDeliveryAddress(deliveryAddress);
     }
 
     public Object removeDeliveryAddress(HttpServletRequest request) throws Exception {

@@ -22,7 +22,7 @@ public class CorsFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse,
                          FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        //注意：这里设置只允许 http://localhost:8081 进行跨域访问
+        // 注意：这里设置只允许 http://localhost:8081 进行跨域访问
         response.setHeader("Access-Control-Allow-Origin", "http://localhost:8081");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE, PUT");

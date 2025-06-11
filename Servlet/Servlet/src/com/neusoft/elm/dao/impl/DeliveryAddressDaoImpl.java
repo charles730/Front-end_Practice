@@ -38,7 +38,7 @@ public class DeliveryAddressDaoImpl implements DeliveryAddressDao {
 
     @Override
     public int saveDeliveryAddress(DeliveryAddress deliveryAddress) throws Exception {
-        int result = 0;
+        int result;
         String sql = "insert into deliveryAddress values(null,?,?,?,?,?)";
         try {
             getSQLforDA(deliveryAddress, sql);
@@ -89,7 +89,7 @@ public class DeliveryAddressDaoImpl implements DeliveryAddressDao {
 
     @Override
     public int updateDeliveryAddress(DeliveryAddress deliveryAddress) throws Exception {
-        int result = 0;
+        int result;
         String sql = "update deliveryAddress set contactName = ?, contactSex = ?, contactTel = ?, address = ? where daId = ? ";
         try {
             getSQLforDA(deliveryAddress, sql);
@@ -103,7 +103,7 @@ public class DeliveryAddressDaoImpl implements DeliveryAddressDao {
 
     @Override
     public int removeDeliveryAddress(Integer daId) throws Exception {
-        int result = 0;
+        int result;
         String sql = "delete from deliveryAddress where daId=?";
         try {
             con = DBUtil.getConnection();

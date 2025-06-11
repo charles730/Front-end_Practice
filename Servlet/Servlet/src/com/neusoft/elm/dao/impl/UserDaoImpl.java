@@ -58,7 +58,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public int saveUser(User user) throws Exception {
-        int result = 0;
+        int result;
         String sql = "insert into user values(?,?,?,?,?,1)";
         try {
             con = DBUtil.getConnection();
