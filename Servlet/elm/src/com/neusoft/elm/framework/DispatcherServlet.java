@@ -35,9 +35,9 @@ public class DispatcherServlet extends HttpServlet {
             // 创建Controller类的对象
             Object controller = clazz.newInstance();
             // 获取Controller类对象中的方法
-            Method method = clazz.getMethod(methodName, new Class[]{HttpServletRequest.class});
+            Method method = clazz.getMethod(methodName, HttpServletRequest.class);
             // 调用上面获取的方法
-            Object result = method.invoke(controller, new Object[]{request});
+            Object result = method.invoke(controller, request);
             // 获取向客户端响应的输出流
             out = response.getWriter();
             ObjectMapper om = new ObjectMapper();

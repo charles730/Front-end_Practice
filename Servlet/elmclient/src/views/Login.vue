@@ -54,7 +54,7 @@ export default {
         alert('密码不能为空！');
         return;
       }
-      //登录请求
+      // 登录请求
       this.$axios.post('UserController/getUserByIdByPass', this.$qs.stringify({
         userId: this.userId,
         password: this.password
@@ -63,7 +63,7 @@ export default {
         if (user == null) {
           alert('用户名或密码不正确！');
         } else {
-          // sessionstorage有容量限制，为了防止数据溢出，所以不将userImg数据放入session中
+          // sessionStorage有容量限制，为了防止数据溢出，所以不将userImg数据放入session中
           user.userImg = '';
           this.$setSessionStorage('user', user);
           this.$router.go(-1);

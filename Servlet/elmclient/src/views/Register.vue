@@ -11,8 +11,7 @@
           手机号码：
         </div>
         <div class="content">
-          <input type="text" @blur="checkUserId" v-model="user.userId" placeholder="手
-机号码">
+          <input type="text" @blur="checkUserId" v-model="user.userId" placeholder="手机号码">
         </div>
       </li>
       <li>
