@@ -11,9 +11,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletResponse;
 
-@WebFilter("/*")
+@WebFilter(filterName = "CorFilter", urlPatterns = {"/"})
 public class CorsFilter implements Filter {
-
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }

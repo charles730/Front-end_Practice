@@ -6,7 +6,12 @@ import com.neusoft.elm.po.User;
 import com.neusoft.elm.service.UserService;
 import com.neusoft.elm.service.impl.UserServiceImpl;
 
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/UserController")
 public class UserController {
+    @PostMapping("/getUserByIdByPass")
     public Object getUserByIdByPass(HttpServletRequest request) throws Exception {
         String userId = request.getParameter("userId");
         String password = request.getParameter("password");
@@ -14,12 +19,14 @@ public class UserController {
         return service.getUserByIdByPass(userId, password);
     }
 
+    @PostMapping("/getUserById")
     public Object getUserById(HttpServletRequest request) throws Exception {
         String userId = request.getParameter("userId");
         UserService service = new UserServiceImpl();
         return service.getUserById(userId);
     }
 
+    @PostMapping("/saveUser")
     public Object saveUser(HttpServletRequest request) throws Exception {
         User user = new User();
         user.setUserId(request.getParameter("userId"));

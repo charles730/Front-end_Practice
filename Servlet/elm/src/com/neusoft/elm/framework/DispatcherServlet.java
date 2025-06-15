@@ -16,6 +16,7 @@ import java.lang.reflect.Method;
  */
 @WebServlet("/")
 public class DispatcherServlet extends HttpServlet {
+    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
         // 中文编码处理
@@ -24,14 +25,17 @@ public class DispatcherServlet extends HttpServlet {
         response.setContentType("application/json;charset=utf-8");
         // 获取客户端请求路径(/HelloController/say)
         String path = request.getServletPath();
+        System.out.println(path);
         // 根据请求路径，将Controller的类名和方法名解析出来
         String className = path.substring(1, path.lastIndexOf("/"));
+        className = "BusinessController";
         String methodName = path.substring(path.lastIndexOf("/") + 1);
+        methodName = "listBusinessByOrderTypeId";
         PrintWriter out = null;
         // 判断请求路径，根据不同的请求，分发给不同的业务处理器
         try {
             // 通过Controller类全名获取此类的所有信息
-            Class clazz = Class.forName("com.neusoft.elm.controller." + className);
+            Class<?> clazz = Class.forName("com.neusoft.elm.controller." + className);
             // 创建Controller类的对象
             Object controller = clazz.newInstance();
             // 获取Controller类对象中的方法
@@ -52,6 +56,7 @@ public class DispatcherServlet extends HttpServlet {
         }
     }
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
         doPost(request, response);

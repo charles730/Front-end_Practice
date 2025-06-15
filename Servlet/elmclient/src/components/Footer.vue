@@ -18,6 +18,7 @@
     </li>
   </ul>
 </template>
+
 <script>
 export default {
   name: 'Footer',
@@ -31,10 +32,10 @@ export default {
   }
 }
 </script>
-<style>
 
+<style>
 .wrapper .footer li {
-  /*li本身的尺寸完全由内容撑起*/
+  /* li本身的尺寸完全由内容撑起 */
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -51,4 +52,5 @@ export default {
 .wrapper .footer li i {
   font-size: 5vw;
 }
+
 </style>

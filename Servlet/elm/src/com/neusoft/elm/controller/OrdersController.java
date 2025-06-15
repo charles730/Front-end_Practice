@@ -5,7 +5,12 @@ import javax.servlet.http.HttpServletRequest;
 import com.neusoft.elm.service.OrdersService;
 import com.neusoft.elm.service.impl.OrdersServiceImpl;
 
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/OrdersController")
 public class OrdersController {
+    @PostMapping("/createOrders")
     public Object createOrders(HttpServletRequest request) throws Exception {
         String userId = request.getParameter("userId");
         Integer businessId = Integer.valueOf(request.getParameter("businessId"));
@@ -14,13 +19,13 @@ public class OrdersController {
         OrdersService service = new OrdersServiceImpl();
         return service.createOrders(userId, businessId, daId, orderTotal);
     }
-
+    @PostMapping("/getOrdersById")
     public Object getOrdersById(HttpServletRequest request) throws Exception {
         Integer orderId = Integer.valueOf(request.getParameter("orderId"));
         OrdersService service = new OrdersServiceImpl();
         return service.getOrdersById(orderId);
     }
-
+    @PostMapping("/listOrdersByUserId")
     public Object listOrdersByUserId(HttpServletRequest request) throws Exception {
         String userId = request.getParameter("userId");
         OrdersService service = new OrdersServiceImpl();

@@ -1,5 +1,10 @@
 module.exports = {
     devServer: {
-        port: 8081
+        proxy: {
+            '/elm': {
+                target: 'http://localhost:8080', // Tomcat地址
+                changeOrigin: true,
+            }
+        }
     }
 }

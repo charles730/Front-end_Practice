@@ -19,7 +19,7 @@ import {
 Vue.config.productionTip = false
 
 // 设置axios的基础url部分
-axios.defaults.baseURL = 'http://localhost:7093/elm';
+axios.defaults.baseURL = '/elm';
 // 将axios挂载到vue实例上，使用时就可以 this.$axios 这样使用了
 Vue.prototype.$axios = axios;
 Vue.prototype.$qs = qs;
@@ -35,7 +35,7 @@ router.beforeEach(function (to, from, next) {
     let user = sessionStorage.getItem('user');
     // 除了登录、注册、首页、商家列表、商家信息之外，都需要判断是否登录
     if (!(to.path === '/' || to.path === '/index' || to.path === '/businessList' ||
-        to.path === '/businessInfo' || to.path === '/login' || to.path === ' / register')) {
+        to.path === '/businessInfo' || to.path === '/login' || to.path === '/register')) {
         if (user == null) {
             router.push('/login');
             location.reload();
