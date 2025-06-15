@@ -41,8 +41,8 @@
     <Footer></Footer>
   </div>
 </template>
-<script>
 
+<script>
 export default {
   name: 'Payment',
   created() {
@@ -52,16 +52,15 @@ export default {
       this.orders = response.data;
     }).catch(error => {
       console.error(error);
+      this.$message.error('加载订单信息失败');
     });
   },
   mounted() {
-    // 这里的代码是实现：一旦路由到在线支付组件，就不能回到订单确认组件。
-    // 先将当前url添加到history对象中
+    // 防止返回订单确认页面
     history.pushState(null, null, document.URL);
-    //popstate事件能够监听history对象的变化
     window.onpopstate = () => {
-      this.$router.push({path: '/index'});
-    }
+      this.$router.push({ path: '/index' });
+    };
   },
   destroyed() {
     window.onpopstate = null;
@@ -74,38 +73,51 @@ export default {
       // 显示加载状态
       this.isLoading = true;
 
-      // 模拟支付请求（实际项目中替换为真实API调用）
-      setTimeout(() => {
-        // 模拟50%概率支付成功
-        const isSuccess = Math.random() > 0.1;
-
-        if (isSuccess) {
-          // 支付成功，跳转到成功页面
-          this.$router.push({
-            name: 'PaymentSuccess',
-            query: {orderId: this.orderId}
-          });
-        } else {
-          // 支付失败，跳转到失败页面
-          this.$router.push({
-            name: 'PaymentFailure',
-            query: {
-              orderId: this.orderId,
-              message: '支付被取消或支付失败，请重试'
+      // 调用实际支付接口
+      this.$axios.post('OrdersController/confirmOrdersById', this.$qs.stringify({
+        orderId: this.orderId
+      }))
+          .then(response => {
+            // 根据接口返回值判断支付结果
+            if (response.data === 1) {
+              // 支付成功，跳转到成功页面
+              this.$router.push({
+                name: 'PaymentSuccess',
+                query: { orderId: this.orderId }
+              });
+            } else {
+              // 支付失败，跳转到失败页面
+              this.$router.push({
+                name: 'PaymentFailure',
+                query: {
+                  orderId: this.orderId,
+                  message: '支付失败，请重试'
+                }
+              });
             }
+          })
+          .catch(error => {
+            console.error('支付接口调用失败', error);
+            // 支付异常，跳转到失败页面
+            this.$router.push({
+              name: 'PaymentFailure',
+              query: {
+                orderId: this.orderId,
+                message: '支付异常，请稍后重试'
+              }
+            });
+          })
+          .finally(() => {
+            this.isLoading = false;
           });
-        }
-
-        this.isLoading = false;
-      }, 1500); // 模拟1.5秒的请求延迟
     }
   },
   data() {
     return {
       orderId: this.$route.query.orderId,
-      orders: {business: {}},
+      orders: { business: {} },
       isShowDetailet: false,
-      isLoading: false // 新增加载状态
+      isLoading: false // 加载状态
     }
   }
 }
