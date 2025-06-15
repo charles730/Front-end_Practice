@@ -66,4 +66,24 @@ public class BusinessDaoImpl implements BusinessDao {
         }
         return business;
     }
+
+    @Override
+    public List<Business> listStarBusinessById(String userId) throws Exception {
+        List<Business> result = new ArrayList<>();
+        List<Integer> businessIds = new ArrayList<>();
+        String sql = "select businessId from userstar where userId = ?";
+        try {
+            con = DBUtil.getConnection();
+            pst = con.prepareStatement(sql);
+            pst.setString(1, userId);
+            rs = pst.executeQuery();
+            while (rs.next()) businessIds.add(rs.getInt(1));
+            for (Integer businessId : businessIds) {
+                result.add(this.getBusinessById(businessId));
+            }
+        } finally {
+            DBUtil.close(rs, pst);
+        }
+        return result;
+    }
 }

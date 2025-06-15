@@ -8,4 +8,8 @@ public interface UserDao {
     int getUserById(String userId) throws Exception;
 
     int saveUser(User user) throws Exception;
+
+    Integer starBusinessById(Integer businessId, String userId, Boolean reverse) throws Exception;
+
+
 }

@@ -4,15 +4,15 @@
       <i class="fa fa-home"></i>
       <p>首页</p>
     </li>
-    <li>
+    <li @click="checkLogin('discovery')">
       <i class="fa fa-compass"></i>
       <p>发现</p>
     </li>
-    <li @click="toOrderList">
+    <li @click="checkLogin('orderList')">
       <i class="fa fa-file-text-o"></i>
       <p>订单</p>
     </li>
-    <li>
+    <li @click="checkLogin('profile')">
       <i class="fa fa-user-o"></i>
       <p>我的</p>
     </li>
@@ -26,8 +26,28 @@ export default {
     toIndex() {
       this.$router.push({path: '/index'});
     },
-    toOrderList() {
-      this.$router.push({path: '/orderList'});
+
+    // 修改后的检查登录方法 - 与BusinessList保持一致
+    checkLogin(target) {
+      // 检查sessionStorage中是否有用户信息
+      const user = sessionStorage.getItem('user');
+
+      // 如果未登录，跳转到登录页
+      if (!user) {
+        this.$router.push({path: '/Login'});
+        return;
+      }
+
+      // 已登录用户跳转到目标页面
+      if (target === 'orderList') {
+        this.$router.push({path: '/orderList'});
+      } else if (target === 'discovery') {
+        // 此处应替换为真实的发现页面路由
+        this.$router.push({path: '/discovery'});
+      } else if (target === 'profile') {
+        // 此处应替换为真实的个人中心页面路由
+        this.$router.push({path: '/profile'});
+      }
     }
   }
 }
@@ -65,5 +85,4 @@ export default {
 .wrapper .footer li i {
   font-size: 5vw;
 }
-
 </style>

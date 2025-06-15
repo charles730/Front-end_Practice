@@ -11,5 +11,5 @@ public interface OrdersDao {
 
     List<Orders> listOrdersByUserId(String userId) throws Exception;
 
-    int confirm
+    int confirmOrdersById(Integer orderId) throws Exception;
 }

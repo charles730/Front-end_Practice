@@ -13,6 +13,8 @@ import AddUserAddress from '../views/AddUserAddress.vue'
 import EditUserAddress from '../views/EditUserAddress.vue'
 import Register from '../views/Register.vue'
 import PaymentSuccess from '../views/PaymentSuccess.vue';
+import Profile from '../views/Profile.vue'
+
 
 
 Vue.use(VueRouter)
@@ -68,6 +70,10 @@ const routes = [{
     path: '/PaymentSuccess',
     name: 'PaymentSuccess',
     component: PaymentSuccess
+},{
+    path: '/profile',
+    name: 'Profile',
+    component: Profile
 }
 ]
 

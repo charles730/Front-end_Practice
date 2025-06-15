@@ -34,8 +34,8 @@ public class OrdersController {
         return service.listOrdersByUserId(userId);
     }
 
-    @PostMapping("/confirmOrderById")
-    public Object confirmOrderById(HttpServletRequest request) throws Exception {
+    @PostMapping("/confirmOrdersById")
+    public Object confirmOrdersById(HttpServletRequest request) throws Exception {
         Integer orderId = Integer.valueOf(request.getParameter("orderId"));
         OrdersService service = new OrdersServiceImpl();
         return service.confirmOrdersById(orderId);

@@ -3,8 +3,12 @@ package com.neusoft.elm.dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.neusoft.elm.dao.UserDao;
+import com.neusoft.elm.po.Business;
 import com.neusoft.elm.po.User;
 import com.neusoft.elm.util.DBUtil;
 
@@ -68,6 +72,23 @@ public class UserDaoImpl implements UserDao {
             pst.setString(3, user.getUserName());
             pst.setInt(4, user.getUserSex());
             pst.setString(5, user.getUserImg());
+            result = pst.executeUpdate();
+        } finally {
+            DBUtil.close(rs, pst);
+        }
+        return result;
+    }
+
+    @Override
+    public Integer starBusinessById(Integer businessId, String userId, Boolean reverse) throws Exception{
+        int result;
+        String sql = "insert into userStar values (?, ?)";
+        if (reverse) sql = "delete from userStar where userId = ? and businessId = ?";
+        try {
+            con = DBUtil.getConnection();
+            pst = con.prepareStatement(sql);
+            pst.setString(1, userId);
+            pst.setInt(2, businessId);
             result = pst.executeUpdate();
         } finally {
             DBUtil.close(rs, pst);

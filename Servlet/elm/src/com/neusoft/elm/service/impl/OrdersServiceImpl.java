@@ -116,6 +116,16 @@ public class OrdersServiceImpl implements OrdersService {
 
     @Override
     public Integer confirmOrdersById(Integer orderId) {
-
+        OrdersDao ordersDao = new OrdersDaoImpl();
+        int ret;
+        try {
+            DBUtil.getConnection();
+            ret = ordersDao.confirmOrdersById(orderId);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBUtil.close();
+        }
+        return ret;
     }
 }

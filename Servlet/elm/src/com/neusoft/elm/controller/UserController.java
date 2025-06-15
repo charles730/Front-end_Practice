@@ -2,8 +2,11 @@ package com.neusoft.elm.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.neusoft.elm.po.Business;
 import com.neusoft.elm.po.User;
+import com.neusoft.elm.service.BusinessService;
 import com.neusoft.elm.service.UserService;
+import com.neusoft.elm.service.impl.BusinessServiceImpl;
 import com.neusoft.elm.service.impl.UserServiceImpl;
 
 import org.springframework.web.bind.annotation.*;
@@ -35,5 +38,12 @@ public class UserController {
         user.setUserSex(Integer.valueOf(request.getParameter("userSex")));
         UserService service = new UserServiceImpl();
         return service.saveUser(user);
+    }
+
+    @PostMapping("/listStarBusinessById")
+    public Object listStarBusinessById(HttpServletRequest request) throws Exception {
+        String userId = request.getParameter("userId");
+        BusinessService service = new BusinessServiceImpl();
+        return service.listStarBusinessById(userId);
     }
 }

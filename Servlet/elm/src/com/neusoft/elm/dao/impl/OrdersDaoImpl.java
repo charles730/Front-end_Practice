@@ -31,7 +31,7 @@ public class OrdersDaoImpl implements OrdersDao {
             pst.setDouble(4, orders.getOrderTotal());
             pst.setInt(5, orders.getDaId());
             pst.executeUpdate();
-            //获取自增长列值（一行一列）
+            // 获取自增长列值（一行一列）
             rs = pst.getGeneratedKeys();
             if (rs.next()) {
                 orderId = rs.getInt(1);
@@ -106,5 +106,22 @@ public class OrdersDaoImpl implements OrdersDao {
             DBUtil.close(pst);
         }
         return list;
+    }
+
+    @Override
+    public int confirmOrdersById(Integer orderId) throws Exception {
+        String sql = "update orders set orderState = 1 where orderId = ?";
+        int ret = 1;
+        try {
+            con = DBUtil.getConnection();
+            pst = con.prepareStatement(sql);
+            pst.setInt(1, orderId);
+            pst.executeUpdate();
+        } catch (Exception e) {
+            ret = 0;
+        } finally {
+            DBUtil.close(pst);
+        }
+        return ret;
     }
 }
