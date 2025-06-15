@@ -10,4 +10,6 @@ public interface OrdersService {
     Orders getOrdersById(Integer orderId);
 
     List<Orders> listOrdersByUserId(String userId);
+
+    Object confirmOrdersById(Integer orderId);
 }

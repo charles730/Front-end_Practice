@@ -113,4 +113,9 @@ public class OrdersServiceImpl implements OrdersService {
         }
         return list;
     }
+
+    @Override
+    public Integer confirmOrdersById(Integer orderId) {
+
+    }
 }

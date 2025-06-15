@@ -717,8 +717,7 @@ export default {
   align-items: center;
 }
 
-.wrapper .business li .business-info .business-info-promotion .business-info-promotion-left,
-.business-info-promotion-left-incon {
+.wrapper .business li .business-info .business-info-promotion .business-info-promotion-left .business-info-promotion-left-incon {
   width: 4vw;
   height: 4vw;
   background-color: #70BC46;

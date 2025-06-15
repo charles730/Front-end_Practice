@@ -21,6 +21,7 @@ public class CartController {
         CartService service = new CartServiceImpl();
         return service.saveCart(cart);
     }
+
     @PostMapping("/updateCart")
     public Object updateCart(HttpServletRequest request) throws Exception {
         Cart cart = new Cart();
@@ -31,6 +32,7 @@ public class CartController {
         CartService service = new CartServiceImpl();
         return service.updateCart(cart);
     }
+
     @PostMapping("/removeCart")
     public Object removeCart(HttpServletRequest request) throws Exception {
         Cart cart = new Cart();
@@ -40,6 +42,7 @@ public class CartController {
         CartService service = new CartServiceImpl();
         return service.removeCart(cart);
     }
+
     @PostMapping("/listCart")
     public Object listCart(HttpServletRequest request) throws Exception {
         Cart cart = new Cart();

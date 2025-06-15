@@ -25,12 +25,9 @@ public class DispatcherServlet extends HttpServlet {
         response.setContentType("application/json;charset=utf-8");
         // 获取客户端请求路径(/HelloController/say)
         String path = request.getServletPath();
-        System.out.println(path);
         // 根据请求路径，将Controller的类名和方法名解析出来
         String className = path.substring(1, path.lastIndexOf("/"));
-        className = "BusinessController";
         String methodName = path.substring(path.lastIndexOf("/") + 1);
-        methodName = "listBusinessByOrderTypeId";
         PrintWriter out = null;
         // 判断请求路径，根据不同的请求，分发给不同的业务处理器
         try {

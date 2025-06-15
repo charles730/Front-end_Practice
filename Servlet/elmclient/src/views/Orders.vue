@@ -63,6 +63,7 @@ export default {
       console.error(error);
     });
 
+    // POST prefix/CartController/listCart?userId=?businessId
     //查询当前用户在购物车中的当前商家食品列表
     this.$axios.post('CartController/listCart', this.$qs.stringify({
       userId: this.user.userId,

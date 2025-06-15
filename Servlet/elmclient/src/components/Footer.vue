@@ -34,6 +34,19 @@ export default {
 </script>
 
 <style>
+.wrapper .footer {
+  width: 100%;
+  height: 14vw;
+  border-top: solid 1px #DDD;
+  background-color: #fff;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
 .wrapper .footer li {
   /* li本身的尺寸完全由内容撑起 */
   display: flex;

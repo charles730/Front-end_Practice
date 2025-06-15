@@ -10,4 +10,6 @@ public interface OrdersDao {
     Orders getOrdersById(Integer orderId) throws Exception;
 
     List<Orders> listOrdersByUserId(String userId) throws Exception;
+
+    int confirm
 }

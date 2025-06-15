@@ -19,16 +19,25 @@ public class OrdersController {
         OrdersService service = new OrdersServiceImpl();
         return service.createOrders(userId, businessId, daId, orderTotal);
     }
+
     @PostMapping("/getOrdersById")
     public Object getOrdersById(HttpServletRequest request) throws Exception {
         Integer orderId = Integer.valueOf(request.getParameter("orderId"));
         OrdersService service = new OrdersServiceImpl();
         return service.getOrdersById(orderId);
     }
+
     @PostMapping("/listOrdersByUserId")
     public Object listOrdersByUserId(HttpServletRequest request) throws Exception {
         String userId = request.getParameter("userId");
         OrdersService service = new OrdersServiceImpl();
         return service.listOrdersByUserId(userId);
+    }
+
+    @PostMapping("/confirmOrderById")
+    public Object confirmOrderById(HttpServletRequest request) throws Exception {
+        Integer orderId = Integer.valueOf(request.getParameter("orderId"));
+        OrdersService service = new OrdersServiceImpl();
+        return service.confirmOrdersById(orderId);
     }
 }

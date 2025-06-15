@@ -27,34 +27,24 @@
     <!-- 支付方式部分 -->
     <ul class="payment-type">
       <li>
-        <img src="../assets/alipay.png">
-        <i class="fa fa-check-circle"></i>
+        <img src="../assets/alipay.png" alt="使用支付宝">
       </li>
       <li>
-        <img src="../assets/wechat.png">
+        <img src="../assets/wechat.png" alt="使用微信支付">
+        <i class="fa fa-check-circle"></i>
       </li>
     </ul>
     <div class="payment-button">
-      <button>确认支付</button>
+      <button @click="handlePayment">确认支付</button>
     </div>
     <!-- 底部菜单部分 -->
     <Footer></Footer>
   </div>
 </template>
 <script>
-import Footer from '../components/Footer.vue';
 
 export default {
   name: 'Payment',
-  data() {
-    return {
-      orderId: this.$route.query.orderId,
-      orders: {
-        business: {}
-      },
-      isShowDetailet: false
-    }
-  },
   created() {
     this.$axios.post('OrdersController/getOrdersById', this.$qs.stringify({
       orderId: this.orderId
@@ -65,8 +55,8 @@ export default {
     });
   },
   mounted() {
-    //这里的代码是实现：一旦路由到在线支付组件，就不能回到订单确认组件。
-//先将当前url添加到history对象中
+    // 这里的代码是实现：一旦路由到在线支付组件，就不能回到订单确认组件。
+    // 先将当前url添加到history对象中
     history.pushState(null, null, document.URL);
     //popstate事件能够监听history对象的变化
     window.onpopstate = () => {
@@ -79,13 +69,77 @@ export default {
   methods: {
     detailetShow() {
       this.isShowDetailet = !this.isShowDetailet;
+    },
+    handlePayment() {
+      // 显示加载状态
+      this.isLoading = true;
+
+      // 模拟支付请求（实际项目中替换为真实API调用）
+      setTimeout(() => {
+        // 模拟50%概率支付成功
+        const isSuccess = Math.random() > 0.1;
+
+        if (isSuccess) {
+          // 支付成功，跳转到成功页面
+          this.$router.push({
+            name: 'PaymentSuccess',
+            query: {orderId: this.orderId}
+          });
+        } else {
+          // 支付失败，跳转到失败页面
+          this.$router.push({
+            name: 'PaymentFailure',
+            query: {
+              orderId: this.orderId,
+              message: '支付被取消或支付失败，请重试'
+            }
+          });
+        }
+
+        this.isLoading = false;
+      }, 1500); // 模拟1.5秒的请求延迟
     }
   },
-  components: {
-    Footer
+  data() {
+    return {
+      orderId: this.$route.query.orderId,
+      orders: {business: {}},
+      isShowDetailet: false,
+      isLoading: false // 新增加载状态
+    }
   }
 }
 </script>
+
+<style scoped>
+/* 新增加载状态样式 */
+.wrapper .payment-button button.loading {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.wrapper .payment-button button.loading::after {
+  content: ' ';
+  display: inline-block;
+  width: 4vw;
+  height: 4vw;
+  margin-left: 2vw;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+  vertical-align: middle;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
 <style scoped>
 /****************** 总容器 ******************/
 .wrapper {
@@ -180,6 +234,7 @@ export default {
   width: 100%;
   box-sizing: border-box;
   padding: 4vw;
+  z-index: 10;
 }
 
 .wrapper .payment-button button {
