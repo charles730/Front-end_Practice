@@ -3,11 +3,14 @@
     <!-- 用户信息卡片 -->
     <div class="user-card">
       <div class="avatar-container">
-        <img :src="avatarSrc" alt="用户头像" class="avatar">
+        <div class="avatar-wrapper">
+          <img :src="avatarSrc" alt="用户头像" class="avatar">
+        </div>
       </div>
       <div class="user-info">
-        <h2>{{ user.name }}</h2>
-        <p class="phone">{{ formatPhone(user.phone) }}</p>
+        <h2>{{ user.userName || 'momo' }}</h2>
+        <p class="phone">用户ID：{{ user.userId }}</p>
+        <p class="phone">性别：{{ user.userSex === 1 ? '男' : '女' }}</p>
       </div>
     </div>
 
@@ -17,92 +20,88 @@
         退出登录
       </button>
     </div>
+
+    <!-- 底部导航栏 -->
+    <Footer></Footer>
   </div>
 </template>
 
 <script>
+import Footer from "../components/Footer.vue";
+import { loadUserImage } from "@/utils/imageCache.js";
+
 export default {
   name: 'Profile',
   data() {
     return {
       user: {
-        name: '游客',
-        phone: '',
-        avatar: ''
+        userId: '',
+        userName: '',
+        userSex: '',
+        userImg: '',
+        password: ''
       },
-
+      defaultAvatar: require('../assets/default_avatar.png'),
+      cachedAvatar: ''
     };
   },
   created() {
-    // 从sessionStorage获取用户信息
     this.loadUserData();
   },
   computed: {
-    // 计算属性返回头像URL
     avatarSrc() {
-      return this.user.avatar || this.defaultAvatar;
+      return this.cachedAvatar || this.user.userImg || this.defaultAvatar;
     }
   },
+  components: {
+    Footer
+  },
   methods: {
-    // 格式化电话号码显示
-    formatPhone(phone) {
-      if (!phone) return '';
-      if (phone.length !== 11) return phone;
-      return `${phone.substring(0, 3)}****${phone.substring(7)}`;
-    },
-
-    // 加载用户数据
-    loadUserData() {
+    async loadUserData() {
       const userData = sessionStorage.getItem('user');
       if (userData) {
         try {
           const parsedData = JSON.parse(userData);
           this.user = {
-            name: parsedData.name || '用户',
-            phone: parsedData.phone || '',
-            avatar: parsedData.avatar || ''
+            userId: parsedData.userId,
+            userName: parsedData.userName || 'momo',
+            userSex: parsedData.userSex,
+            userImg: parsedData.userImg,
+            password: parsedData.password
           };
+
+          if (parsedData.userId) {
+            this.cachedAvatar = await loadUserImage(parsedData.userId);
+          }
         } catch (e) {
           console.error('解析用户数据错误:', e);
+          this.$router.replace('/login');
         }
       } else {
-        // 如果未登录，则跳转到登录页面
         this.$router.replace('/login');
       }
     },
 
-    // 退出登录方法
     logout() {
-      // 清空sessionStorage中的用户信息
       sessionStorage.removeItem('user');
-
-      // 显示退出成功提示
       this.showToast('已退出登录');
-
-      // 延迟跳转到登录页
       setTimeout(() => {
         this.$router.replace('/login');
       }, 800);
     },
 
-    // 显示Toast提示
     showToast(message) {
-      // 移除可能存在的旧提示
       const existingToast = document.querySelector('.toast');
       if (existingToast) existingToast.remove();
 
-      // 创建新提示元素
       const toast = document.createElement('div');
       toast.className = 'toast';
       toast.textContent = message;
 
-      // 添加到文档中
       document.body.appendChild(toast);
 
-      // 添加显示动画
       setTimeout(() => toast.classList.add('show'), 10);
 
-      // 3秒后移除提示
       setTimeout(() => {
         toast.classList.remove('show');
         setTimeout(() => toast.remove(), 300);
@@ -114,11 +113,11 @@ export default {
 
 <style scoped>
 .profile-container {
-  padding: 20px;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: calc(100vh - 14vw);
   background-color: #f8f8f8;
+  padding: 20px 20px 14vw;
 }
 
 .user-card {
@@ -144,14 +143,25 @@ export default {
   border-radius: 50%;
   overflow: hidden;
   background: linear-gradient(45deg, #ff7e5f, #feb47b);
-  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-wrapper {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .avatar {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
-  border: 3px solid white;
   object-fit: cover;
 }
 
@@ -166,6 +176,7 @@ export default {
   font-size: 16px;
   color: #666;
   letter-spacing: 0.5px;
+  margin: 4px 0;
 }
 
 .logout-section {
@@ -196,7 +207,6 @@ export default {
   transform: scale(0.98);
 }
 
-/* Toast提示样式 */
 .toast {
   position: fixed;
   bottom: 40px;
@@ -217,5 +227,61 @@ export default {
 .toast.show {
   transform: translateX(-50%) translateY(0);
   opacity: 1;
+}
+
+.footer {
+  width: 100%;
+  height: 14vw;
+  border-top: 1px solid #ddd;
+  background-color: #fff;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  z-index: 1000;
+}
+
+.footer ul {
+  width: 100%;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer li {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  padding: 1vw 0;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.footer li.active {
+  color: #0097FF;
+}
+
+.footer li.active i {
+  color: #0097FF;
+}
+
+.footer li.active p {
+  color: #0097FF;
+}
+
+.footer li i {
+  font-size: 5vw;
+  margin-bottom: 0.5vw;
+}
+
+.footer li p {
+  font-size: 2.8vw;
+  margin: 0;
 }
 </style>

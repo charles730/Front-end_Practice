@@ -33,8 +33,10 @@
     <Footer></Footer>
   </div>
 </template>
+
 <script>
 import Footer from '../components/Footer.vue';
+import { saveUserImage, loadUserImage } from '../utils/imageCache'; // 导入缓存工具
 
 export default {
   name: 'Login',
@@ -45,7 +47,7 @@ export default {
     }
   },
   methods: {
-    login() {
+    async login() {
       if (this.userId === '') {
         alert('手机号码不能为空！');
         return;
@@ -54,26 +56,39 @@ export default {
         alert('密码不能为空！');
         return;
       }
-      // 登录请求
-      this.$axios.post('UserController/getUserByIdByPass', this.$qs.stringify({
-        userId: this.userId,
-        password: this.password
-      })).then(response => {
+
+      try {
+        // 登录请求
+        const response = await this.$axios.post('UserController/getUserByIdByPass', this.$qs.stringify({
+          userId: this.userId,
+          password: this.password
+        }));
+
         let user = response.data;
-        if (user == null) {
+        if (!user) {
           alert('用户名或密码不正确！');
-        } else {
-          // sessionStorage有容量限制，为了防止数据溢出，所以不将userImg数据放入session中
-          user.userImg = '';
-          this.$setSessionStorage('user', user);
-          this.$router.go(-1);
+          return;
         }
-      }).catch(error => {
-        console.error(error);
-      });
+
+        // 提取用户头像并保存到本地缓存
+        const userImg = user.userImg || '';
+        if (userImg) {
+          await saveUserImage(this.userId, userImg);
+        }
+
+        // 从用户对象中移除头像数据，减少sessionStorage占用
+        const userWithoutImg = { ...user, userImg: '' };
+        this.$setSessionStorage('user', userWithoutImg);
+
+        // 返回上一页
+        this.$router.go(-1);
+      } catch (error) {
+        console.error('登录失败', error);
+        alert('登录失败，请重试');
+      }
     },
     register() {
-      this.$router.push({path: 'register'});
+      this.$router.push({ path: 'register' });
     }
   },
   components: {
@@ -81,7 +96,9 @@ export default {
   }
 }
 </script>
+
 <style scoped>
+/* 样式部分保持不变 */
 /****************** 总容器 ******************/
 .wrapper {
   width: 100%;

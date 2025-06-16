@@ -336,7 +336,6 @@
 <script>
 //导入共通组件
 import Footer from '../components/Footer.vue';
-
 export default {
   name: 'Index',
   mounted() {

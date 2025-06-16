@@ -43,12 +43,42 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public Integer starBusinessById(Integer businessId, String userId, Boolean reverse) {
+    public Integer starBusinessById(Integer businessId, String userId) {
         UserDao dao = new UserDaoImpl();
         int ret = 0;
         try {
             DBUtil.getConnection();
-            ret = dao.starBusinessById(businessId, userId, reverse);
+            ret = dao.starBusinessById(businessId, userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close();
+        }
+        return ret;
+    }
+
+    @Override
+    public Integer unstarBusinessById(Integer businessId, String userId) {
+        UserDao dao = new UserDaoImpl();
+        int ret = 0;
+        try {
+            DBUtil.getConnection();
+            ret = dao.unstarBusinessById(businessId, userId);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.close();
+        }
+        return ret;
+    }
+
+    @Override
+    public Integer isBusinessStarredById(Integer businessId, String userId) {
+        UserDao dao = new UserDaoImpl();
+        int ret = 0;
+        try {
+            DBUtil.getConnection();
+            ret = dao.isBusinessStarredById(businessId, userId);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

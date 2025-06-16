@@ -9,7 +9,9 @@ public interface UserDao {
 
     int saveUser(User user) throws Exception;
 
-    Integer starBusinessById(Integer businessId, String userId, Boolean reverse) throws Exception;
+    Integer starBusinessById(Integer businessId, String userId) throws Exception;
 
+    Integer unstarBusinessById(Integer businessId, String userId) throws Exception;
 
+    Integer isBusinessStarredById(Integer businessId, String userId) throws Exception;
 }

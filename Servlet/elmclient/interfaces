@@ -1,0 +1,4 @@
+int BusinessController.isBusinessStarredById(int businessId, String userId) -> 1: starred, 0: not
+int BusinessController.starBusinessById(int businessId, String userId) -> 1: success, 0: failed
+int BusinessController.unstarBusinessById(int businessId, String userId) -> 1: success, 0: failed
+List<Business> UserController.listStarrBusinessById(String userId)

@@ -2,12 +2,15 @@ package com.neusoft.elm.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.neusoft.elm.po.Business;
 import org.springframework.web.bind.annotation.*;
 
 import com.neusoft.elm.service.BusinessService;
 import com.neusoft.elm.service.impl.BusinessServiceImpl;
 
+
+@RequestMapping
+@CrossOrigin
+@RestController
 public class BusinessController {
     @PostMapping("/listBusinessByOrderTypeId")
     public Object listBusinessByOrderTypeId(HttpServletRequest request) throws Exception {
@@ -27,9 +30,23 @@ public class BusinessController {
     public Object starBusinessById(HttpServletRequest request) throws Exception {
         Integer businessId = Integer.valueOf(request.getParameter("businessId"));
         String userId = request.getParameter("userId");
-        Boolean reverse = Integer.valueOf(request.getParameter("reverse")) == 1;
         BusinessService service = new BusinessServiceImpl();
-        return service.starBusinessById(businessId, userId, reverse);
+        return service.starBusinessById(businessId, userId);
     }
 
+    @PostMapping("/unstarBusinessById")
+    public Object unstarBusinessById(HttpServletRequest request) throws Exception {
+        Integer businessId = Integer.valueOf(request.getParameter("businessId"));
+        String userId = request.getParameter("userId");
+        BusinessService service = new BusinessServiceImpl();
+        return service.unstarBusinessById(businessId, userId);
+    }
+
+    @PostMapping("/isBusinessStarredById")
+    public Object isBusinessStarredById(HttpServletRequest request) throws Exception {
+        Integer businessId = Integer.valueOf(request.getParameter("businessId"));
+        String userId = request.getParameter("userId");
+        BusinessService service = new BusinessServiceImpl();
+        return service.isBusinessStarredById(businessId, userId);
+    }
 }

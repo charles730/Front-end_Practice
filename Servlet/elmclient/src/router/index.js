@@ -14,7 +14,7 @@ import EditUserAddress from '../views/EditUserAddress.vue'
 import Register from '../views/Register.vue'
 import PaymentSuccess from '../views/PaymentSuccess.vue';
 import Profile from '../views/Profile.vue'
-
+import Star from '../views/Star.vue'
 
 
 Vue.use(VueRouter)
@@ -75,6 +75,11 @@ const routes = [{
     name: 'Profile',
     component: Profile
 }
+    ,{
+        path: '/star',
+        name: 'Star',
+        component: Star
+    }
 ]
 
 // 解决重复路由报异常问题

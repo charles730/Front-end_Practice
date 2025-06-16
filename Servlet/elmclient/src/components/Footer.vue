@@ -4,9 +4,9 @@
       <i class="fa fa-home"></i>
       <p>首页</p>
     </li>
-    <li @click="checkLogin('discovery')">
+    <li @click="toStar">
       <i class="fa fa-compass"></i>
-      <p>发现</p>
+      <p>收藏</p>
     </li>
     <li @click="checkLogin('orderList')">
       <i class="fa fa-file-text-o"></i>
@@ -25,6 +25,9 @@ export default {
   methods: {
     toIndex() {
       this.$router.push({path: '/index'});
+    },
+    toStar() {
+      this.$router.push({path: '/star'});
     },
 
     // 修改后的检查登录方法 - 与BusinessList保持一致
@@ -54,10 +57,10 @@ export default {
 </script>
 
 <style>
-.wrapper .footer {
+.footer {
   width: 100%;
   height: 14vw;
-  border-top: solid 1px #DDD;
+  border-top: 1px solid #ddd;
   background-color: #fff;
   position: fixed;
   left: 0;
@@ -65,24 +68,48 @@ export default {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  z-index: 1000;
 }
 
-.wrapper .footer li {
-  /* li本身的尺寸完全由内容撑起 */
+.footer ul {
+  width: 100%;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer li {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   color: #999;
-  user-select: none;
+  padding: 1vw 0;
   cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.wrapper .footer li p {
-  font-size: 2.8vw;
+.footer li.active {
+  color: #0097FF;
 }
 
-.wrapper .footer li i {
+.footer li.active i {
+  color: #0097FF;
+}
+
+.footer li.active p {
+  color: #0097FF;
+}
+
+.footer li i {
   font-size: 5vw;
+  margin-bottom: 0.5vw;
+}
+
+.footer li p {
+  font-size: 2.8vw;
+  margin: 0;
 }
 </style>

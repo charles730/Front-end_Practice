@@ -80,16 +80,48 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Integer starBusinessById(Integer businessId, String userId, Boolean reverse) throws Exception{
+    public Integer starBusinessById(Integer businessId, String userId) throws Exception {
         int result;
         String sql = "insert into userStar values (?, ?)";
-        if (reverse) sql = "delete from userStar where userId = ? and businessId = ?";
         try {
             con = DBUtil.getConnection();
             pst = con.prepareStatement(sql);
             pst.setString(1, userId);
             pst.setInt(2, businessId);
             result = pst.executeUpdate();
+        } finally {
+            DBUtil.close(rs, pst);
+        }
+        return result;
+    }
+
+    @Override
+    public Integer unstarBusinessById(Integer businessId, String userId) throws Exception {
+        int result;
+        String sql = "delete from userstar where userId = ? and businessId = ?";
+        try {
+            con = DBUtil.getConnection();
+            pst = con.prepareStatement(sql);
+            pst.setString(1, userId);
+            pst.setInt(2, businessId);
+            result = pst.executeUpdate();
+        } finally {
+            DBUtil.close(rs, pst);
+        }
+        return result;
+    }
+
+    @Override
+    public Integer isBusinessStarredById(Integer businessId, String userId) throws Exception {
+        int result = 0;
+        String sql = "select * from userStar where userId = ? and businessId = ?";
+        try {
+            con = DBUtil.getConnection();
+            pst = con.prepareStatement(sql);
+            pst.setString(1, userId);
+            pst.setInt(2, businessId);
+            rs = pst.executeQuery();
+            if (rs.next()) result = 1;
         } finally {
             DBUtil.close(rs, pst);
         }
