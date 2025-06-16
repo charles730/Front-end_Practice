@@ -334,23 +334,22 @@
 </template>
 
 <script>
-//导入共通组件
+// 导入共通组件
 import Footer from '../components/Footer.vue';
+
 export default {
   name: 'Index',
   mounted() {
     document.onscroll = () => {
-      //获取滚动条位置
+      // 获取滚动条位置
       let s1 = document.documentElement.scrollTop;
       let s2 = document.body.scrollTop;
       let scroll = s1 === 0 ? s2 : s1;
-      //获取视口宽度
+      // 获取视口宽度
       let width = document.documentElement.clientWidth;
-
-      //获取顶部固定块
+      // 获取顶部固定块
       let search = this.$refs.fixedBox;
-
-      //判断滚动条超过视口宽度的12%时，搜索块变固定定位
+      // 判断滚动条超过视口宽度的12%时，搜索块变固定定位
       if (scroll > width * 0.12) {
         search.style.position = 'fixed';
         search.style.left = '0';
@@ -361,7 +360,7 @@ export default {
     }
   },
   destroyed() {
-    //当切换到其他组件时，就不需要document滚动条事件，所以将此事件去掉
+    // 当切换到其他组件时，就不需要document滚动条事件，所以将此事件去掉
     document.onscroll = null;
   },
   components: {
@@ -452,17 +451,17 @@ export default {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  /*要使用align-content。10个子元素将自动换行为两行，而且两行作为一个整体垂直居中*/
+  /* 要使用align-content。10个子元素将自动换行为两行，而且两行作为一个整体垂直居中 */
   align-content: center;
 }
 
 .wrapper .foodtype li {
-  /*一共10个子元素，通过计算，子元素宽度在16.7 ~ 20 之间，才能保证换两行*/
+  /* 一共10个子元素，通过计算，子元素宽度在16.7 ~ 20 之间，才能保证换两行 */
   width: 18vw;
   height: 20vw;
 
   display: flex;
-  /*弹性盒子主轴方向设为column，然后仍然是垂直水平方向居中*/
+  /* 弹性盒子主轴方向设为column，然后仍然是垂直水平方向居中 */
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -473,7 +472,7 @@ export default {
 
 .wrapper .foodtype li img {
   width: 12vw;
-  /*视频讲解时高度设置为12vw，实际上设置为10.3vw更佳*/
+  /* 视频讲解时高度设置为12vw，实际上设置为10.3vw更佳 */
   height: 10.3vw;
 }
 
@@ -484,7 +483,7 @@ export default {
 
 /****************** 横幅广告部分 ******************/
 .wrapper .banner {
-  /**
+  /*
    * 设置容器宽度95%，然后水平居中，这样两边留白;
    * 这里不能用padding，因为背景图片也会覆盖padding
    */
@@ -492,8 +491,8 @@ export default {
   margin: 0 auto;
   height: 29vw;
 
-  /*此三个样式组合，可以保证背景图片充满整个容器*/
-  background-image: url(../assets/index_banner.png);
+  /* 此三个样式组合，可以保证背景图片充满整个容器 */
+  background-image: url("../assets/index_banner.png");
   background-repeat: no-repeat;
   background-size: cover;
 

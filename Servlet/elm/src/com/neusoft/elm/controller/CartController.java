@@ -3,13 +3,13 @@ package com.neusoft.elm.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import com.neusoft.elm.po.Cart;
-
 import com.neusoft.elm.service.CartService;
 import com.neusoft.elm.service.impl.CartServiceImpl;
 
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/CartController")
 public class CartController {
     @PostMapping("/saveCart")

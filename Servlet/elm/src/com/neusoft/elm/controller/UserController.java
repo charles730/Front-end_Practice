@@ -2,7 +2,6 @@ package com.neusoft.elm.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.neusoft.elm.po.Business;
 import com.neusoft.elm.po.User;
 import com.neusoft.elm.service.BusinessService;
 import com.neusoft.elm.service.UserService;
@@ -12,6 +11,7 @@ import com.neusoft.elm.service.impl.UserServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/UserController")
 public class UserController {
     @PostMapping("/getUserByIdByPass")

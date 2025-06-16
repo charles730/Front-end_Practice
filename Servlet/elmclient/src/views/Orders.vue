@@ -39,6 +39,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   name: 'Orders',
@@ -54,7 +55,7 @@ export default {
   created() {
     this.user = this.$getSessionStorage('user');
     this.deliveryaddress = this.$getLocalStorage(this.user.userId);
-    //查询当前商家
+    // 查询当前商家
     this.$axios.post('BusinessController/getBusinessById', this.$qs.stringify({
       businessId: this.businessId
     })).then(response => {
@@ -63,8 +64,7 @@ export default {
       console.error(error);
     });
 
-    // POST prefix/CartController/listCart?userId=?businessId
-    //查询当前用户在购物车中的当前商家食品列表
+    // 查询当前用户在购物车中的当前商家食品列表
     this.$axios.post('CartController/listCart', this.$qs.stringify({
       userId: this.user.userId,
       businessId: this.businessId
@@ -98,8 +98,7 @@ export default {
         alert('请选择送货地址！');
         return;
       }
-
-      //创建订单
+      // 创建订单
       this.$axios.post('OrdersController/createOrders', this.$qs.stringify({
         userId: this.user.userId,
         businessId: this.businessId,
@@ -119,6 +118,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 /****************** 总容器 ******************/
 .wrapper {
@@ -144,7 +144,7 @@ export default {
 
 /****************** 订单信息部分 ******************/
 .wrapper .order-info {
-  /*注意这里，不设置高，靠内容撑开。因为地址有可能折行*/
+  /* 注意这里，不设置高，靠内容撑开。因为地址有可能折行 */
   width: 100%;
   margin-top: 12vw;
   background-color: #0097EF;

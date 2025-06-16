@@ -37,8 +37,6 @@
     <div class="payment-button">
       <button @click="handlePayment">确认支付</button>
     </div>
-    <!-- 底部菜单部分 -->
-    <Footer></Footer>
   </div>
 </template>
 
@@ -52,14 +50,14 @@ export default {
       this.orders = response.data;
     }).catch(error => {
       console.error(error);
-      this.$message.error('加载订单信息失败');
+      alert('加载订单信息失败');
     });
   },
   mounted() {
     // 防止返回订单确认页面
     history.pushState(null, null, document.URL);
     window.onpopstate = () => {
-      this.$router.push({ path: '/index' });
+      this.$router.push({path: '/index'});
     };
   },
   destroyed() {
@@ -83,7 +81,7 @@ export default {
               // 支付成功，跳转到成功页面
               this.$router.push({
                 name: 'PaymentSuccess',
-                query: { orderId: this.orderId }
+                query: {orderId: this.orderId}
               });
             } else {
               // 支付失败，跳转到失败页面
@@ -115,7 +113,7 @@ export default {
   data() {
     return {
       orderId: this.$route.query.orderId,
-      orders: { business: {} },
+      orders: {business: {}},
       isShowDetailet: false,
       isLoading: false // 加载状态
     }
@@ -124,7 +122,6 @@ export default {
 </script>
 
 <style scoped>
-/* 新增加载状态样式 */
 .wrapper .payment-button button.loading {
   background-color: #ccc;
   cursor: not-allowed;
@@ -151,8 +148,7 @@ export default {
     transform: rotate(360deg);
   }
 }
-</style>
-<style scoped>
+
 /****************** 总容器 ******************/
 .wrapper {
   width: 100%;
@@ -253,7 +249,6 @@ export default {
   width: 100%;
   height: 10vw;
   border: none;
-  /*去掉外轮廓线*/
   outline: none;
   border-radius: 4px;
   background-color: #38CA73;

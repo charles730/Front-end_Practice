@@ -36,7 +36,7 @@
 
 <script>
 import Footer from '../components/Footer.vue';
-import { saveUserImage, loadUserImage } from '../utils/imageCache'; // 导入缓存工具
+import {saveUserImage} from '@/utils/imageCache';
 
 export default {
   name: 'Login',
@@ -70,13 +70,11 @@ export default {
           return;
         }
 
-        // 提取用户头像并保存到本地缓存
         const userImg = user.userImg || '';
         if (userImg) {
           await saveUserImage(this.userId, userImg);
         }
 
-        // 从用户对象中移除头像数据，减少sessionStorage占用
         const userWithoutImg = { ...user, userImg: '' };
         this.$setSessionStorage('user', userWithoutImg);
 
@@ -98,7 +96,6 @@ export default {
 </script>
 
 <style scoped>
-/* 样式部分保持不变 */
 /****************** 总容器 ******************/
 .wrapper {
   width: 100%;
@@ -182,7 +179,6 @@ export default {
   height: 10vw;
   font-size: 3.8vw;
   font-weight: 700;
-  /*与上面登陆按钮不同的只有颜色、背景色、边框不同*/
   color: #666;
   background-color: #EEE;
   border: solid 1px #DDD;

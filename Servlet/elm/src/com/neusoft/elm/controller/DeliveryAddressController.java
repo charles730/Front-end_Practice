@@ -8,6 +8,7 @@ import com.neusoft.elm.service.impl.DeliveryAddressServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/DeliveryAddressController")
 public class DeliveryAddressController {
     @PostMapping("/listDeliveryAddressByUserId")

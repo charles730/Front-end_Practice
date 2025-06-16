@@ -57,6 +57,7 @@
     <Footer></Footer>
   </div>
 </template>
+
 <script>
 import Footer from '../components/Footer.vue';
 
@@ -104,7 +105,7 @@ export default {
         return;
       }
 
-      //注册请求
+      // 注册请求
       this.$axios.post('UserController/saveUser', this.$qs.stringify(
           this.user
       )).then(response => {
@@ -124,6 +125,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 /****************** 总容器 ******************/
 .wrapper {

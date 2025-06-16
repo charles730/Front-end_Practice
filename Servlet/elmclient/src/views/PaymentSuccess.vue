@@ -6,7 +6,6 @@
     </div>
     <h3>支付成功</h3>
     <p>订单已支付，感谢您的购买！</p>
-    <button @click="goToOrderDetail">查看订单详情</button>
     <button @click="goHome">返回首页</button>
   </div>
 </template>
@@ -15,9 +14,6 @@
 export default {
   name: 'PaymentSuccess',
   methods: {
-    goToOrderDetail() {
-      this.$router.push({ name: 'OrderDetail', params: { id: this.$route.query.orderId } });
-    },
     goHome() {
       this.$router.push({ name: 'Home' });
     }

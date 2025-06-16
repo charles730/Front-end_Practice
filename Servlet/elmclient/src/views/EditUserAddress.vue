@@ -49,6 +49,7 @@
     <Footer></Footer>
   </div>
 </template>
+
 <script>
 import Footer from '../components/Footer.vue';
 
@@ -111,6 +112,7 @@ export default {
   }
 }
 </script>
+
 <style scoped>
 /*************** 总容器 ***************/
 .wrapper {

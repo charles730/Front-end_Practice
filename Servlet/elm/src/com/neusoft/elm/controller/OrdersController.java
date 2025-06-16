@@ -8,6 +8,7 @@ import com.neusoft.elm.service.impl.OrdersServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/OrdersController")
 public class OrdersController {
     @PostMapping("/createOrders")

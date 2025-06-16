@@ -1,13 +1,8 @@
-import { Buffer } from 'buffer'; // 浏览器环境需要引入buffer包
-
 // 保存用户头像到本地缓存
 export async function saveUserImage(userId, imageUrl) {
     try {
-        // 检查是否已有缓存
         const cachedImage = localStorage.getItem(`user_${userId}_image`);
-        if (cachedImage) {
-            return; // 已有缓存，直接返回
-        }
+        if (cachedImage) return;
 
         // 从URL获取图片数据
         const response = await fetch(imageUrl);
@@ -21,7 +16,6 @@ export async function saveUserImage(userId, imageUrl) {
 
         return new Promise((resolve, reject) => {
             reader.onloadend = () => {
-                // 保存到localStorage
                 localStorage.setItem(`user_${userId}_image`, reader.result);
                 resolve();
             };

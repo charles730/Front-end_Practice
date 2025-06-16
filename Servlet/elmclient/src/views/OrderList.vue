@@ -41,7 +41,7 @@
           </p>
           <div class="order-info-right">
             <p>&#165;{{ item.orderTotal }}</p>
-            <!-- 新增已支付图标 -->
+            <!-- 已支付图标 -->
             <span class="order-status-tag paid">已支付</span>
           </div>
         </div>
@@ -205,7 +205,6 @@ export default {
   transition: all 0.2s;
 }
 
-/* 新增：订单状态标签样式 */
 .wrapper .order li .order-info .order-info-right .order-status-tag {
   display: inline-flex;
   align-items: center;
@@ -217,14 +216,14 @@ export default {
   margin-left: 2vw;
 }
 
-/* 已支付状态：绿色背景 */
+/* 已支付状态 */
 .wrapper .order li .order-info .order-info-right .order-status-tag.paid {
-  background-color: #38CA73; /* 绿色 */
+  background-color: #38CA73;
 }
 
-/* 未支付状态：橙色背景（与去支付按钮一致） */
+/* 未支付状态：橙色背景 */
 .wrapper .order li .order-info .order-info-right .go-pay-btn {
-  background-color: #ff6b6b; /* 橙色 */
+  background-color: #ff6b6b;
 }
 
 .wrapper .order li .order-detailet {

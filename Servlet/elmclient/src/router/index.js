@@ -66,17 +66,16 @@ const routes = [{
     path: '/register',
     name: 'Register',
     component: Register
-},{
+}, {
     path: '/PaymentSuccess',
     name: 'PaymentSuccess',
     component: PaymentSuccess
-},{
+}, {
     path: '/profile',
     name: 'Profile',
     component: Profile
-}
-    ,{
-        path: '/star',
+}, {
+        path: '/starList',
         name: 'Star',
         component: Star
     }

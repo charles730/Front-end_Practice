@@ -31,7 +31,7 @@
             <p class="explain-info">{{ item.businessExplain }}</p>
           </div>
           <!-- 收藏按钮 -->
-          <div class="favorite-btn" @click.stop="toggleFavorite(item.businessId, true)">
+          <div class="favorite-btn" @click.stop="toggleStarred(item.businessId)">
             <i class="fa fa-heart favorite-icon favorite-red"></i>
           </div>
         </li>
@@ -47,7 +47,7 @@
 import Footer from '../components/Footer.vue';
 
 export default {
-  name: 'FavoriteList',
+  name: 'StarredList',
   data() {
     return {
       favoriteArr: [],
@@ -58,7 +58,7 @@ export default {
   created() {
     this.user = this.$getSessionStorage('user');
     if (this.user.userId) {
-      this.loadFavoriteList();
+      this.loadStarList();
     } else {
       this.$router.push('/login');
     }
@@ -68,7 +68,7 @@ export default {
   },
   methods: {
     // 加载收藏列表
-    loadFavoriteList() {
+    loadStarList() {
       this.isLoading = true;
       this.$axios.post('UserController/listStarBusinessById', this.$qs.stringify({
         userId: this.user.userId
@@ -77,7 +77,7 @@ export default {
         this.loadCartQuantity();
       }).catch((error) => {
         console.error('加载收藏列表失败', error);
-        this.$message.error('加载收藏失败，请重试');
+        alert('加载收藏失败，请重试');
       }).finally(() => {
         this.isLoading = false;
       });
@@ -103,7 +103,7 @@ export default {
     },
 
     // 切换收藏状态
-    toggleFavorite(businessId, isStarred) {
+    toggleStarred(businessId) {
       if (!this.user.userId) {
         this.$router.push('/login');
         return;
@@ -120,15 +120,14 @@ export default {
       })).then((response) => {
         if (response.data === 1) {
           this.favoriteArr.splice(businessIndex, 1);
-          this.$message.success('已取消收藏');
         } else {
           this.$set(this.favoriteArr[businessIndex], 'isStarred', true);
-          this.$message.error('取消收藏失败');
+          alert('取消收藏失败');
         }
       }).catch((error) => {
         console.error('取消收藏接口调用失败', error);
         this.$set(this.favoriteArr[businessIndex], 'isStarred', true);
-        this.$message.error('操作失败，请重试');
+        alert('操作失败，请重试');
       });
     },
 
@@ -268,7 +267,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
-  margin-right: 10vw; /* 为收藏按钮留出空间 */
+  margin-right: 10vw;
 }
 
 .business-name {
@@ -287,6 +286,7 @@ export default {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
+  line-clamp: 1;
   overflow: hidden;
 }
 
@@ -297,10 +297,10 @@ export default {
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
+  line-clamp: 1;
   overflow: hidden;
 }
 
-/* 收藏按钮样式 */
 .wrapper .business li .favorite-btn {
   position: absolute;
   right: 3vw;
@@ -316,6 +316,6 @@ export default {
 
 .wrapper .business li .favorite-icon {
   font-size: 5vw;
-  color: #ff4d4f; /* 红色填充 */
+  color: #ff4d4f;
 }
 </style>

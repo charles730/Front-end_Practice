@@ -6,7 +6,7 @@
     </header>
     <!-- 商家logo部分 -->
     <div class="business-logo">
-      <img :src="business.businessImg">
+      <img :src="business.businessImg" alt="商家图片">
     </div>
     <!-- 商家信息部分 -->
     <div class="business-info">
@@ -27,8 +27,7 @@
         </div>
         <div class="food-right">
           <div>
-            <i class="fa fa-minus-circle" @click="minus(index)" v
-               show="item.quantity!=0"></i>
+            <i class="fa fa-minus-circle" @click="minus(index)" v-show="item.quantity!==0"></i>
           </div>
           <p><span v-show="item.quantity!==0">{{ item.quantity }}</span></p>
           <div>
@@ -58,8 +57,7 @@
           &#165;{{ business.starPrice }}起送
         </div>
         <!-- 达到起送费 -->
-        <div class="cart-right-item" @click="toOrder" v
-             show="totalSettle>=business.starPrice">
+        <div class="cart-right-item" @click="toOrder" v-show="totalSettle>=business.starPrice">
           去结算
         </div>
       </div>
@@ -79,7 +77,7 @@ export default {
   },
   created() {
     this.user = this.$getSessionStorage('user');
-    //根据businessId查询商家信息
+    // 根据businessId查询商家信息
     this.$axios.post('BusinessController/getBusinessById', this.$qs.stringify({
       businessId: this.businessId
     })).then(response => {
@@ -88,7 +86,7 @@ export default {
       console.error(error);
     });
 
-    //根据businessId查询所属食品信息
+    // 根据businessId查询所属食品信息
     this.$axios.post('FoodController/listFoodByBusinessId', this.$qs.stringify({
       businessId: this.businessId
     })).then(response => {
@@ -97,7 +95,7 @@ export default {
         this.foodArr[i].quantity = 0;
       }
 
-      //如果已登录，那么需要去查询购物车中是否已经选购了某个食品
+      // 如果已登录，那么需要去查询购物车中是否已经选购了某个食品
       if (this.user != null) {
         this.listCart();
       }
@@ -127,7 +125,7 @@ export default {
       });
     },
     add(index) {
-      //首先做登录验证
+      // 首先做登录验证
       if (this.user == null) {
         this.$router.push({
           path: '/login'
@@ -136,15 +134,15 @@ export default {
       }
 
       if (this.foodArr[index].quantity === 0) {
-        //做insert
+        // 做insert
         this.savaCart(index);
       } else {
-        //做update
+        // 做update
         this.updateCart(index, 1);
       }
     },
     minus(index) {
-      //首先做登录验证
+      // 首先做登录验证
       if (this.user == null) {
         this.$router.push({
           path: '/login'
@@ -153,10 +151,10 @@ export default {
       }
 
       if (this.foodArr[index].quantity > 1) {
-        //做update
+        // 做update
         this.updateCart(index, -1);
       } else {
-        //做delete
+        // 做delete
         this.removeCart(index);
       }
     },
@@ -167,7 +165,7 @@ export default {
         foodId: this.foodArr[index].foodId
       })).then(response => {
         if (response.data === 1) {
-          //此食品数量要更新为1；
+          // 此食品数量要更新为1；
           this.foodArr[index].quantity = 1;
           this.foodArr.sort();
         } else {
@@ -185,7 +183,7 @@ export default {
         quantity: this.foodArr[index].quantity + num
       })).then(response => {
         if (response.data === 1) {
-          //此食品数量要更新为1或-1；
+          // 此食品数量要更新为1或-1；
           this.foodArr[index].quantity += num;
           this.foodArr.sort();
         } else {
@@ -202,7 +200,7 @@ export default {
         foodId: this.foodArr[index].foodId
       })).then(response => {
         if (response.data === 1) {
-          //此食品数量要更新为0；视图的减号和数量要消失
+          // 此食品数量要更新为0；视图的减号和数量要消失
           this.foodArr[index].quantity = 0;
           this.foodArr.sort();
         } else {
@@ -222,7 +220,7 @@ export default {
     }
   },
   computed: {
-    //食品总价格
+    // 食品总价格
     totalPrice() {
       let total = 0;
       for (let item of this.foodArr) {
@@ -238,13 +236,14 @@ export default {
       }
       return quantity;
     },
-//结算总价格
     totalSettle() {
+      // 结算总价格
       return this.totalPrice + this.business.deliveryPrice;
     }
   }
 }
 </script>
+
 <style scoped>
 /****************** 总容器 ******************/
 .wrapper {
@@ -448,20 +447,4 @@ export default {
   justify-content: center;
   align-items: center;
 }
-
-/*不够起送费时的样式（只有背景色和鼠标样式的区别）*/
-/*
-.wrapper .cart .cart-right .cart-right-item{
-width: 100%;
-height: 100%;
-background-color: #535356;
-color: #fff;
-font-size: 4.5vw;
-font-weight: 700;
-user-select: none;
-display: flex;
-justify-content: center;
-align-items: center;
-}
-*/
 </style>

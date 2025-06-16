@@ -28,7 +28,7 @@
 
 <script>
 import Footer from "../components/Footer.vue";
-import { loadUserImage } from "@/utils/imageCache.js";
+import {loadUserImage} from "@/utils/imageCache.js";
 
 export default {
   name: 'Profile',
@@ -71,14 +71,14 @@ export default {
           };
 
           if (parsedData.userId) {
-            this.cachedAvatar = await loadUserImage(parsedData.userId);
+            this.cachedAvatar = loadUserImage(parsedData.userId);
           }
         } catch (e) {
           console.error('解析用户数据错误:', e);
-          this.$router.replace('/login');
+          await this.$router.replace('/login');
         }
       } else {
-        this.$router.replace('/login');
+        await this.$router.replace('/login');
       }
     },
 
@@ -205,42 +205,6 @@ export default {
 
 .logout-btn:active {
   transform: scale(0.98);
-}
-
-.toast {
-  position: fixed;
-  bottom: 40px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: rgba(0, 0, 0, 0.7);
-  color: white;
-  padding: 12px 24px;
-  border-radius: 30px;
-  font-size: 16px;
-  font-weight: 500;
-  opacity: 0;
-  transition: all 0.3s ease;
-  white-space: nowrap;
-  z-index: 1000;
-}
-
-.toast.show {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-}
-
-.footer {
-  width: 100%;
-  height: 14vw;
-  border-top: 1px solid #ddd;
-  background-color: #fff;
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 1000;
 }
 
 .footer ul {

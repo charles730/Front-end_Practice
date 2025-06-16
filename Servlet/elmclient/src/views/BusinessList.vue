@@ -19,7 +19,7 @@
           <p>{{ item.businessExplain }}</p>
         </div>
         <!-- 收藏按钮 - 使用Font Awesome图标 -->
-        <div class="favorite-btn" @click.stop="toggleFavorite(item.businessId, item.isStarred)">
+        <div class="favorite-btn" @click.stop="toggleStarred(item.businessId, item.isStarred)">
           <i :class="['fa', item.isStarred ? 'fa-heart favorite-red' : 'fa-heart-o', 'favorite-icon']"></i>
         </div>
       </li>
@@ -59,7 +59,7 @@ export default {
         // 判断是否登录
         if (this.user.userId) {
           this.loadCartQuantity();
-          this.checkFavoriteStatus();
+          this.checkStarStatus();
         }
       }).catch(error => {
         console.error('获取商家列表失败', error);
@@ -84,9 +84,8 @@ export default {
         console.error('加载购物车数量失败', error);
       });
     },
-
-    // 检查收藏状态（使用Vue.set确保响应式）
-    checkFavoriteStatus() {
+    // 检查收藏状态
+    checkStarStatus() {
       for (const business of this.businessArr) {
         this.$axios.post('BusinessController/isBusinessStarredById', this.$qs.stringify({
           businessId: business.businessId,
@@ -102,7 +101,7 @@ export default {
     },
 
     // 切换收藏状态
-    toggleFavorite(businessId, isStarred) {
+    toggleStarred(businessId, isStarred) {
       if (!this.user.userId) {
         this.$router.push('/login');
         return;
@@ -111,7 +110,6 @@ export default {
       const business = this.businessArr.find(item => item.businessId === businessId);
       if (!business) return;
 
-      // 先更新本地状态（使用Vue.set确保响应式）
       Vue.set(business, 'isStarred', !isStarred);
 
       if (isStarred) {
@@ -121,15 +119,11 @@ export default {
           userId: this.user.userId
         })).then(response => {
           if (response.data !== 1) {
-            // 接口失败时恢复状态
             Vue.set(business, 'isStarred', true);
             alert('取消收藏失败');
-          } else {
-            alert('已取消收藏');
           }
         }).catch(error => {
           console.error('取消收藏接口调用失败', error);
-          // 网络错误时恢复状态
           Vue.set(business, 'isStarred', true);
           alert('操作失败，请重试');
         });
@@ -142,13 +136,9 @@ export default {
           if (response.data !== 1) {
             // 接口失败时恢复状态
             Vue.set(business, 'isStarred', false);
-            alert('收藏失败');
-          } else {
-            alert('收藏成功');
           }
         }).catch(error => {
           console.error('收藏接口调用失败', error);
-          // 网络错误时恢复状态
           Vue.set(business, 'isStarred', false);
           alert('操作失败，请重试');
         });
@@ -157,7 +147,7 @@ export default {
 
     // 跳转到商家详情
     toBusinessInfo(businessId) {
-      this.$router.push({ path: '/businessInfo', query: { businessId: businessId } });
+      this.$router.push({path: '/businessInfo', query: {businessId: businessId}});
     }
   }
 }
@@ -266,12 +256,10 @@ export default {
   transition: all 0.3s ease;
 }
 
-/* 已收藏状态 - 红色填充 */
 .wrapper .business li .fa-heart {
   color: #ff4d4f;
 }
 
-/* 未收藏状态 - 灰色空心 */
 .wrapper .business li .fa-heart-o {
   color: #999;
 }
@@ -280,16 +268,11 @@ export default {
   transform: scale(0.9);
 }
 
-/* 点击动画 */
 .wrapper .business li .favorite-btn i {
   transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .wrapper .business li .favorite-btn:active i {
   transform: scale(0.9);
-}
-
-.wrapper .business li .favorite-btn i:hover {
-  color: #ff7e5f; /* 悬停时颜色变深 */
 }
 </style>
