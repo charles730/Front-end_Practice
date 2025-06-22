@@ -11,7 +11,7 @@ public class DBUtil {
     private static final String URL = "jdbc:mysql://localhost:3306/elm?characterEncoding=utf-8";
     private static final String DRIVER = "com.mysql.jdbc.Driver";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "2005040519@xyx";
+    private static final String PASSWORD = "2559815776a";
 
     // 获取Connection
     public static Connection getConnection() {
