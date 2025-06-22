@@ -28,6 +28,7 @@ bin/
 ### Mac OS ###
 .DS_Store
 
-/lib
-/WebAppLib
-/WebContent
+lib/
+WebAppLib/
+WebContent/
+.smarttomcat/
